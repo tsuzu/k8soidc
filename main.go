@@ -17,11 +17,12 @@ import (
 )
 
 var config struct {
-	ClientID     string
-	ClientSecret string
-	Scopes       []string
-	RedirectURL  string
-	ProviderURL  string
+	ClientID           string
+	ClientSecret       string
+	Scopes             []string
+	RedirectURL        string
+	ProviderURL        string
+	SessionStoreSecret string
 }
 
 func init() {
@@ -30,6 +31,11 @@ func init() {
 	config.Scopes = strings.Split(os.Getenv("OIDC_SCOPES"), ",")
 	config.RedirectURL = os.Getenv("OIDC_REDIRECT_URL")
 	config.ProviderURL = os.Getenv("OIDC_PROVIDER_URL")
+	config.SessionStoreSecret = os.Getenv("SESSION_STORE_SECRET")
+
+	if config.SessionStoreSecret == "" {
+		config.SessionStoreSecret = "very-secure-secret"
+	}
 }
 
 type Authenticator struct {
@@ -182,6 +188,8 @@ func UserinfoHandler(rw http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
+	Init()
+
 	mux := http.NewServeMux()
 	mux.HandleFunc("/login", LoginHandler)
 	mux.HandleFunc("/callback", CallbackHandler)
