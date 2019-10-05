@@ -211,14 +211,12 @@ func main() {
 
 		session.Save(req, rw)
 
-		if session.IsNew {
-			http.Redirect(rw, req, "/login", http.StatusTemporaryRedirect)
+		_, found := session.Values["id_token"]
 
-			return
-		} else {
+		if found {
 			http.Redirect(rw, req, "/userinfo", http.StatusTemporaryRedirect)
-
-			return
+		} else {
+			http.Redirect(rw, req, "/login", http.StatusTemporaryRedirect)
 		}
 	})
 
