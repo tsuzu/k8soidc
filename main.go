@@ -214,4 +214,11 @@ func main() {
 		}
 	})
 
+	port := "80"
+
+	if p, found := os.LookupEnv("PORT"); found {
+		port = p
+	}
+
+	http.ListenAndServe(":"+port, mux)
 }
