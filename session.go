@@ -7,11 +7,11 @@ import (
 )
 
 var (
-	Store *sessions.FilesystemStore
+	Store *sessions.CookieStore
 )
 
 func Init() error {
-	Store = sessions.NewFilesystemStore("", []byte(config.SessionStoreSecret))
+	Store = sessions.NewCookieStore([]byte(config.SessionStoreSecret))
 	gob.Register(map[string]interface{}{})
 	return nil
 }
