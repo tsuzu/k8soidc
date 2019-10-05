@@ -169,7 +169,7 @@ func UserinfoHandler(rw http.ResponseWriter, req *http.Request) {
 	}
 
 	if session.IsNew {
-		http.Redirect(rw, req, "/", http.StatusTemporaryRedirect)
+		http.Redirect(rw, req, "/login", http.StatusTemporaryRedirect)
 
 		return
 	}
@@ -177,7 +177,7 @@ func UserinfoHandler(rw http.ResponseWriter, req *http.Request) {
 	idTokenI, ok := session.Values["id_token"]
 
 	if !ok {
-		http.Redirect(rw, req, "/", http.StatusTemporaryRedirect)
+		http.Redirect(rw, req, "/login", http.StatusTemporaryRedirect)
 
 		return
 	}
@@ -187,7 +187,7 @@ func UserinfoHandler(rw http.ResponseWriter, req *http.Request) {
 	refreshTokenI, ok := session.Values["refresh_token"]
 
 	if !ok {
-		http.Redirect(rw, req, "/", http.StatusTemporaryRedirect)
+		http.Redirect(rw, req, "/login", http.StatusTemporaryRedirect)
 
 		return
 	}
