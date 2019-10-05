@@ -242,7 +242,9 @@ func UserinfoHandler(rw http.ResponseWriter, req *http.Request) {
 	}
 
 	rw.Header().Set("Content-Tyep", "application/yaml;charset=UTF-8")
-	yaml.NewEncoder(rw).Encode(uc)
+	encoder := yaml.NewEncoder(rw)
+	encoder.SetIndent(2)
+	encoder.Encode(uc)
 }
 
 func main() {
