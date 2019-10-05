@@ -10,10 +10,9 @@ import (
 
 	"strings"
 
-	"fmt"
-
 	"github.com/coreos/go-oidc"
 	"golang.org/x/oauth2"
+	"gopkg.in/yaml.v3"
 )
 
 var config struct {
@@ -119,6 +118,7 @@ func CallbackHandler(w http.ResponseWriter, r *http.Request) {
 
 	session.Values["id_token"] = rawIDToken
 	session.Values["access_token"] = token.AccessToken
+	session.Values["refresh_token"] = token.RefreshToken
 	session.Values["profile"] = profile
 	err = session.Save(r, w)
 	if err != nil {
@@ -184,7 +184,65 @@ func UserinfoHandler(rw http.ResponseWriter, req *http.Request) {
 
 	idToken := idTokenI.(string)
 
-	fmt.Fprintf(rw, "id token: %s", idToken)
+	refreshTokenI, ok := session.Values["refresh_token"]
+
+	if !ok {
+		http.Redirect(rw, req, "/", http.StatusTemporaryRedirect)
+
+		return
+	}
+
+	refreshToken := refreshTokenI.(string)
+
+	type Config struct {
+		ClientID                string `yaml:"client-id"`
+		ClientSecret            string `yaml:"client-secret"`
+		IDToken                 string `yaml:"id-token"`
+		IdpCertificateAuthority string `yaml:"idp-certificate-authority,omitempty"`
+		IdpIssuerURL            string `yaml:"idp-issuer-url"`
+		RefreshToken            string `yaml:"refresh-token"`
+	}
+
+	type AuthProvider struct {
+		Config *Config `yaml:"config"`
+		Name   string  `yaml:"name"`
+	}
+
+	type UserConfig struct {
+		AuthProvider *AuthProvider `yaml:"auth-provider"`
+	}
+
+	type User struct {
+		Name string      `yaml:"name"`
+		User *UserConfig `yaml:"user"`
+	}
+
+	type UserContext struct {
+		Users []*User `yaml:"users"`
+	}
+
+	uc := &UserContext{
+		Users: []*User{
+			{
+				Name: "openid-connect",
+				User: &UserConfig{
+					AuthProvider: &AuthProvider{
+						Name: "oidc",
+						Config: &Config{
+							ClientID:     config.ClientID,
+							ClientSecret: config.ClientSecret,
+							IDToken:      idToken,
+							IdpIssuerURL: config.ProviderURL,
+							RefreshToken: refreshToken,
+						},
+					},
+				},
+			},
+		},
+	}
+
+	rw.Header().Set("Content-Tyep", "application/yaml;charset=UTF-8")
+	yaml.NewEncoder(rw).Encode(uc)
 }
 
 func main() {

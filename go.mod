@@ -9,4 +9,6 @@ require (
 	golang.org/x/crypto v0.0.0-20191002192127-34f69633bfdc // indirect
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
 	gopkg.in/square/go-jose.v2 v2.3.1 // indirect
+	gopkg.in/yaml.v2 v2.2.4
+	gopkg.in/yaml.v3 v3.0.0-20190924164351-c8b7dadae555
 )
