@@ -1,0 +1,27 @@
+{
+  "name": "k8soidc",
+  "description": "Generate kubernetes config yaml for OpenID Connect authentication",
+  "repository": "https://github.com/cs3238-tsuzu/k8soidc",
+  "env": {
+    "OIDC_CLIENT_ID": {
+      "description": "OpenID Connect ClientID",
+      "value": ""
+    },
+    "OIDC_CLIENT_SECRET": {
+      "description": "OpenID Connect Client Secret",
+      "value": ""
+    },
+    "OIDC_SCOPES": {
+      "description": "OpenID Connect Client Scopes",
+      "value": "openid,profile,email,offline_access"
+    },
+   	"OIDC_REDIRECT_URL": {
+      "description": "Redirect URL(should starts with URL serving this application)",
+      "value": ""
+    },
+	"OIDC_PROVIDER_URL": {
+	  "description": "Kubernetes URL",
+	  "value": ""
+	}
+  }
+}
