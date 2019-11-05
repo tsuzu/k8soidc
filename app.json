@@ -15,13 +15,13 @@
       "description": "OpenID Connect Client Scopes",
       "value": "openid,profile,email,offline_access"
     },
-   	"OIDC_REDIRECT_URL": {
+    "OIDC_REDIRECT_URL": {
       "description": "Redirect URL(should starts with URL serving this application)",
       "value": ""
     },
-	"OIDC_PROVIDER_URL": {
-	  "description": "Kubernetes URL",
-	  "value": ""
-	}
+    "OIDC_PROVIDER_URL": {
+      "description": "OpenID Connect issuer URL",
+      "value": ""
+    }
   }
 }
