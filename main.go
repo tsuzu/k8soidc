@@ -10,7 +10,7 @@ import (
 
 	"strings"
 
-	"github.com/coreos/go-oidc"
+	"github.com/coreos/go-oidc/v3/oidc"
 	"golang.org/x/oauth2"
 	"gopkg.in/yaml.v3"
 )
@@ -98,28 +98,14 @@ func CallbackHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	oidcConfig := &oidc.Config{
-		ClientID: config.ClientID,
-	}
-
-	idToken, err := authenticator.Provider.Verifier(oidcConfig).Verify(context.TODO(), rawIDToken)
-
 	if err != nil {
 		http.Error(w, "Failed to verify ID Token: "+err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	// Getting now the userInfo
-	var profile map[string]interface{}
-	if err := idToken.Claims(&profile); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	session.Values["id_token"] = rawIDToken
 	session.Values["access_token"] = token.AccessToken
 	session.Values["refresh_token"] = token.RefreshToken
-	session.Values["profile"] = profile
 	err = session.Save(r, w)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

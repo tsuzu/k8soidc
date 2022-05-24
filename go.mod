@@ -1,14 +1,20 @@
-module github.com/cs3238-tsuzu/k8soidc
+module github.com/tsuzu/k8soidc
 
-go 1.13
+go 1.18
 
 require (
-	github.com/coreos/go-oidc v2.1.0+incompatible
-	github.com/gorilla/sessions v1.2.0
-	github.com/pquerna/cachecontrol v0.0.0-20180517163645-1555304b9b35 // indirect
-	golang.org/x/crypto v0.0.0-20191002192127-34f69633bfdc // indirect
-	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
-	gopkg.in/square/go-jose.v2 v2.3.1 // indirect
-	gopkg.in/yaml.v2 v2.2.4
-	gopkg.in/yaml.v3 v3.0.0-20190924164351-c8b7dadae555
+	github.com/coreos/go-oidc/v3 v3.2.0
+	github.com/gorilla/sessions v1.2.1
+	golang.org/x/oauth2 v0.0.0-20220411215720-9780585627b5
+	gopkg.in/yaml.v3 v3.0.0
+)
+
+require (
+	github.com/golang/protobuf v1.4.2 // indirect
+	github.com/gorilla/securecookie v1.1.1 // indirect
+	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9 // indirect
+	golang.org/x/net v0.0.0-20220127200216-cd36cc0744dd // indirect
+	google.golang.org/appengine v1.6.6 // indirect
+	google.golang.org/protobuf v1.25.0 // indirect
+	gopkg.in/square/go-jose.v2 v2.5.1 // indirect
 )
