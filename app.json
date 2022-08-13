@@ -1,7 +1,7 @@
 {
   "name": "k8soidc",
   "description": "Generate kubernetes config yaml for OpenID Connect authentication",
-  "repository": "https://github.com/tsuzu/k8soidc",
+  "repository": "https://github.com/MISW/k8soidc",
   "env": {
     "OIDC_CLIENT_ID": {
       "description": "OpenID Connect ClientID",
