@@ -1,4 +1,4 @@
-module github.com/tsuzu/k8soidc
+module github.com/MISW/k8soidc
 
 go 1.18
 
